@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Current Hostname:', window.location.hostname);
             if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                  console.log('Localhost detected: Using direct Worker URL');
-                 apiUrl = 'https://hm-youtube-api.ryan-scott.workers.dev/api/youtube/popular?limit=12'; 
+                 apiUrl = 'https://hughmassie.ryan-scott.workers.dev/api/youtube/popular?limit=12'; 
             } else {
                  console.log('Production detected: Using relative API path');
             }
@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Fallback: Direct Worker URL (If relative failed or returned 404)
             if (!response || !response.ok) {
                  // Use the direct worker URL you confirmed:
-                 apiUrl = 'https://hm-youtube-api.ryan-scott.workers.dev/api/youtube/popular?limit=12';
+                 apiUrl = 'https://hughmassie.ryan-scott.workers.dev/api/youtube/popular?limit=12';
                  response = await fetch(apiUrl);
             }
 
