@@ -1,0 +1,16 @@
+{
+  "name": "hugh-massie",
+  "version": "1.0.0",
+  "description": "A premium, single‑page portfolio website for **Hugh Massie**, showcasing his role as Executive Chairman & Founder of DNA Behavior, his podcast, origin story, and ventures like GoDNA.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
