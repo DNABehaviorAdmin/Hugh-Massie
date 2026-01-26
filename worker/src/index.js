@@ -1,160 +1,280 @@
+/**
+ * Cloudflare Worker: /api/youtube/popular?limit=12
+ * - Fetches uploads from @behavioraleconomicstoday, then sorts by viewCount desc.
+ * - Uses caches.default to cache responses for 6 hours.
+ *
+ * Required secret:
+ * - YOUTUBE_API_KEY
+ *
+ * Route this Worker to:
+ * - hughmassie.com/api/*
+ */
+
+const DEFAULT_LIMIT = 12;
+const MAX_LIMIT = 24;
+const CACHE_TTL_SECONDS = 60 * 60 * 6; // 6 hours
+
+const HANDLE = "behavioraleconomicstoday"; // from https://youtube.com/@behavioraleconomicstoday
+
+function jsonResponse(data, status = 200, extraHeaders = {}) {
+  const headers = new Headers({
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": `public, max-age=${CACHE_TTL_SECONDS}`,
+    ...extraHeaders,
+  });
+  return new Response(JSON.stringify(data, null, 2), { status, headers });
+}
+
+function clampLimit(raw) {
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n <= 0) return DEFAULT_LIMIT;
+  return Math.min(Math.floor(n), MAX_LIMIT);
+}
+
+function formatDuration(iso) {
+  // ISO8601 duration like PT1H2M3S, PT12M34S, PT45S
+  if (!iso || typeof iso !== "string") return null;
+  const m = iso.match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);
+  if (!m) return null;
+  const h = Number(m[1] || 0);
+  const min = Number(m[2] || 0);
+  const s = Number(m[3] || 0);
+
+  const total = h * 3600 + min * 60 + s;
+  if (!Number.isFinite(total)) return null;
+
+  const pad2 = (x) => String(x).padStart(2, "0");
+  if (h > 0) return `${h}:${pad2(min)}:${pad2(s)}`;
+  return `${min}:${pad2(s)}`;
+}
+
+async function ytFetch(url, apiKey) {
+  const u = new URL(url);
+  u.searchParams.set("key", apiKey);
+
+  const res = await fetch(u.toString(), {
+    headers: { "Accept": "application/json" },
+  });
+
+  // YouTube often returns JSON with error details
+  const body = await res.text();
+  let parsed = null;
+  try {
+    parsed = JSON.parse(body);
+  } catch {
+    // leave null
+  }
+
+  if (!res.ok) {
+    const message =
+      parsed?.error?.message ||
+      `YouTube API error: ${res.status} ${res.statusText}`;
+    const reason = parsed?.error?.errors?.[0]?.reason || null;
+    throw new Error(reason ? `${message} (${reason})` : message);
+  }
+
+  return parsed;
+}
+
+async function resolveChannelId(apiKey) {
+  // 1) Prefer forHandle if supported
+  try {
+    const data = await ytFetch(
+      `https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${encodeURIComponent(
+        HANDLE
+      )}`,
+      apiKey
+    );
+    const id = data?.items?.[0]?.id;
+    if (id) return id;
+  } catch {
+    // ignore and fallback
+  }
+
+  // 2) Fallback to search
+  const search = await ytFetch(
+    `https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&maxResults=5&q=${encodeURIComponent(
+      HANDLE
+    )}`,
+    apiKey
+  );
+
+  // Pick the most relevant first item
+  const id = search?.items?.[0]?.snippet?.channelId;
+  if (!id) throw new Error("Could not resolve YouTube channelId from handle.");
+  return id;
+}
+
+async function getUploadsPlaylistId(channelId, apiKey) {
+  const data = await ytFetch(
+    `https://www.googleapis.com/youtube/v3/channels?part=contentDetails,snippet&id=${encodeURIComponent(
+      channelId
+    )}`,
+    apiKey
+  );
+
+  const uploads =
+    data?.items?.[0]?.contentDetails?.relatedPlaylists?.uploads || null;
+
+  const channelTitle = data?.items?.[0]?.snippet?.title || null;
+
+  if (!uploads) throw new Error("Could not find uploads playlist for channel.");
+  return { uploadsPlaylistId: uploads, channelTitle };
+}
+
+async function getRecentVideoIdsFromUploads(uploadsPlaylistId, apiKey) {
+  // Pull up to 50 newest uploads, then we will sort by viewCount
+  const data = await ytFetch(
+    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50&playlistId=${encodeURIComponent(
+      uploadsPlaylistId
+    )}`,
+    apiKey
+  );
+
+  const ids =
+    data?.items
+      ?.map((it) => it?.contentDetails?.videoId)
+      ?.filter(Boolean) || [];
+
+  // Deduplicate
+  return Array.from(new Set(ids));
+}
+
+async function getVideoDetails(videoIds, apiKey) {
+  // videos endpoint limit is 50 IDs per request
+  const chunks = [];
+  for (let i = 0; i < videoIds.length; i += 50) {
+    chunks.push(videoIds.slice(i, i + 50));
+  }
+
+  const results = [];
+  for (const chunk of chunks) {
+    const data = await ytFetch(
+      `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${encodeURIComponent(
+        chunk.join(",")
+      )}`,
+      apiKey
+    );
+
+    const items = data?.items || [];
+    for (const v of items) {
+      const videoId = v?.id;
+      if (!videoId) continue;
+
+      const title = v?.snippet?.title || "";
+      const publishedAt = v?.snippet?.publishedAt || null;
+
+      // Prefer higher-res thumbs if present
+      const thumbs = v?.snippet?.thumbnails || {};
+      const thumbnailUrl =
+        thumbs?.maxres?.url ||
+        thumbs?.standard?.url ||
+        thumbs?.high?.url ||
+        thumbs?.medium?.url ||
+        thumbs?.default?.url ||
+        `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+
+      const viewCount = Number(v?.statistics?.viewCount || 0);
+      const durationIso = v?.contentDetails?.duration || null;
+      const duration = formatDuration(durationIso);
+
+      results.push({
+        videoId,
+        title,
+        publishedAt,
+        thumbnailUrl,
+        viewCount,
+        duration,
+      });
+    }
+  }
+
+  return results;
+}
+
+async function buildPopularResponse(apiKey, limit) {
+  const channelId = await resolveChannelId(apiKey);
+  const { uploadsPlaylistId, channelTitle } = await getUploadsPlaylistId(
+    channelId,
+    apiKey
+  );
+  const recentVideoIds = await getRecentVideoIdsFromUploads(
+    uploadsPlaylistId,
+    apiKey
+  );
+
+  if (recentVideoIds.length === 0) {
+    return {
+      channel: channelTitle || "Behavioral Economics Today",
+      items: [],
+      cachedAt: new Date().toISOString(),
+    };
+  }
+
+  const details = await getVideoDetails(recentVideoIds, apiKey);
+
+  // Sort by viewCount desc
+  details.sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0));
+
+  return {
+    channel: channelTitle || "Behavioral Economics Today",
+    items: details.slice(0, limit),
+    cachedAt: new Date().toISOString(),
+  };
+}
+
 export default {
   async fetch(request, env, ctx) {
-    const url = new URL(request.url);
-    const path = url.pathname;
+    try {
+      const url = new URL(request.url);
 
-    // CORS headers
-    const corsHeaders = {
-      'Access-Control-Allow-Origin': '*', // Adjust to specific domain in production if needed
-      'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Max-Age': '86400',
-    };
+      // Only handle the API route you want
+      if (url.pathname !== "/api/youtube/popular") {
+        return new Response("Not found", { status: 404 });
+      }
 
-    if (request.method === 'OPTIONS') {
-      return new Response(null, { headers: corsHeaders });
+      if (request.method !== "GET") {
+        return new Response("Method not allowed", { status: 405 });
+      }
+
+      const apiKey = env.YOUTUBE_API_KEY;
+      if (!apiKey) {
+        return jsonResponse(
+          { error: "Missing YOUTUBE_API_KEY secret in Worker environment." },
+          500
+        );
+      }
+
+      const limit = clampLimit(url.searchParams.get("limit"));
+
+      // Cache key should vary by limit
+      const cacheUrl = new URL(request.url);
+      cacheUrl.searchParams.set("limit", String(limit));
+      const cacheKey = new Request(cacheUrl.toString(), request);
+
+      const cache = caches.default;
+      const cached = await cache.match(cacheKey);
+      if (cached) return cached;
+
+      const payload = await buildPopularResponse(apiKey, limit);
+
+      const res = jsonResponse(payload, 200, {
+        // If you ever serve from both www and apex, keep this strict or remove it.
+        // "Access-Control-Allow-Origin": "https://hughmassie.com",
+      });
+
+      // Store in Cloudflare edge cache
+      ctx.waitUntil(cache.put(cacheKey, res.clone()));
+
+      return res;
+    } catch (err) {
+      return jsonResponse(
+        {
+          error: "Failed to build popular videos feed.",
+          detail: err instanceof Error ? err.message : String(err),
+        },
+        500
+      );
     }
-
-    if (request.method !== 'GET') {
-      return new Response('Method Not Allowed', { status: 405, headers: corsHeaders });
-    }
-
-    if (path === '/api/youtube/popular') {
-      return await handlePopularVideos(request, env, ctx, corsHeaders);
-    }
-
-    return new Response('Not Found', { status: 404, headers: corsHeaders });
   },
 };
-
-async function handlePopularVideos(request, env, ctx, corsHeaders) {
-  const cache = caches.default;
-  const cacheKey = new Request(request.url, request); // Cache based on full URL including params
-
-  // Check Cache
-  let response = await cache.match(cacheKey);
-  if (response) {
-    console.log('Cache Hit');
-    return response;
-  }
-
-  console.log('Cache Miss');
-
-  const apiKey = env.YOUTUBE_API_KEY;
-  if (!apiKey) {
-    return new Response(JSON.stringify({ error: 'Missing API Key configuration' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
-    });
-  }
-
-  try {
-    const channelHandle = 'behavioraleconomicstoday';
-    
-    // 1. Get Channel ID and Uploads Playlist ID
-    const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=contentDetails,id&forHandle=${channelHandle}&key=${apiKey}`;
-    const channelRes = await fetch(channelUrl);
-    const channelData = await channelRes.json();
-
-    if (!channelData.items || channelData.items.length === 0) {
-        // Fallback search if handle fails (though it shouldn't for this channel)
-        throw new Error('Channel not found');
-    }
-
-    const channelId = channelData.items[0].id;
-    const uploadsPlaylistId = channelData.items[0].contentDetails.relatedPlaylists.uploads;
-
-    // 2. Get Recent Uploads (fetch more than needed to sort by popularity, e.g., 50)
-    const playlistUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${uploadsPlaylistId}&maxResults=50&key=${apiKey}`;
-    const playlistRes = await fetch(playlistUrl);
-    const playlistData = await playlistRes.json();
-
-    if (!playlistData.items) {
-        return new Response(JSON.stringify({ items: [] }), {
-            headers: { 'Content-Type': 'application/json', ...corsHeaders }
-        });
-    }
-
-    // Extract Video IDs
-    const videoIds = playlistData.items.map(item => item.contentDetails.videoId).join(',');
-
-    // 3. Get Video Statistics (View Count) and Duration
-    const videosUrl = `https://www.googleapis.com/youtube/v3/videos?part=statistics,contentDetails,snippet&id=${videoIds}&key=${apiKey}`;
-    const videosRes = await fetch(videosUrl);
-    const videosData = await videosRes.json();
-
-    if (!videosData.items) {
-         return new Response(JSON.stringify({ items: [] }), {
-            headers: { 'Content-Type': 'application/json', ...corsHeaders }
-        });
-    }
-
-    // 4. Transform and Sort
-    const items = videosData.items.map(item => {
-        return {
-            videoId: item.id,
-            title: item.snippet.title,
-            publishedAt: item.snippet.publishedAt,
-            thumbnailUrl: item.snippet.thumbnails.high ? item.snippet.thumbnails.high.url : item.snippet.thumbnails.default.url,
-            viewCount: parseInt(item.statistics.viewCount || '0', 10),
-            duration: parseDuration(item.contentDetails.duration) // Helper to format ISO8601 duration
-        };
-    });
-
-    // Sort by View Count Descending
-    items.sort((a, b) => b.viewCount - a.viewCount);
-
-    // Limit (default 12)
-    const limit = new URL(request.url).searchParams.get('limit') || 12;
-    const limitedItems = items.slice(0, parseInt(limit));
-
-    const result = {
-        channel: 'Behavioral Economics Today',
-        items: limitedItems,
-        cachedAt: new Date().toISOString()
-    };
-
-    // 5. Construct Response with Cache Headers
-    response = new Response(JSON.stringify(result), {
-        headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'public, max-age=21600', // 6 hours
-            ...corsHeaders
-        }
-    });
-
-    // Write to Cache
-    ctx.waitUntil(cache.put(cacheKey, response.clone()));
-
-    return response;
-
-  } catch (error) {
-    console.error('Worker Error:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders }
-    });
-  }
-}
-
-function parseDuration(isoDuration) {
-    // Basic ISO8601 duration parser for PT#M#S
-    const match = isoDuration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    if (!match) return isoDuration;
-
-    const hours = (match[1] || '').replace('H', '');
-    const minutes = (match[2] || '').replace('M', '');
-    const seconds = (match[3] || '').replace('S', '');
-
-    let result = '';
-    if (hours) result += hours + ':';
-    result += (minutes || '0').padStart(hours ? 2 : 1, '0') + ':';
-    result += (seconds || '0').padStart(2, '0');
-
-    // If only seconds, format appropriately (e.g. 0:45)
-    if (!hours && !minutes) result = '0:' + result;
-    
-    // If format is like 5:05 (5 mins 5 secs)
-    if (!hours && minutes) return `${minutes}:${(seconds||'0').padStart(2,'0')}`;
-
-    return result;
-}
