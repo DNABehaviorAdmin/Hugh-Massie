@@ -1,10 +1,10 @@
 {
-    "name": "Hugh Massie Portfolio",
+    "name": "Hugh Massie | Behavioral Intelligence",
     "short_name": "Hugh Massie",
-    "start_url": "./index.html",
+    "start_url": "/",
     "display": "standalone",
-    "background_color": "#0f172a",
-    "theme_color": "#0f172a",
+    "background_color": "#020617",
+    "theme_color": "#8b5cf6",
     "icons": [
         {
             "src": "assets/icon-192.png",
