@@ -332,4 +332,134 @@ document.addEventListener('DOMContentLoaded', () => {
             progressBar.style.width = `${scrollPercent}%`;
         });
     }
+
+    /* --- 13. YouTube Popular Videos Feed (Worker API) --- */
+    initYouTubeFeed();
+
+    async function initYouTubeFeed() {
+        const container = document.getElementById('pv-scroll-container');
+        const section = document.getElementById('popular-videos');
+        const playerContainer = document.getElementById('pv-player-container');
+        const prevBtn = document.getElementById('pv-prev');
+        const nextBtn = document.getElementById('pv-next');
+
+        if (!container || !section) return;
+
+        try {
+            // 1. Try Relative Path (Standard for production site)
+            let apiUrl = '/api/youtube/popular?limit=12';
+            
+            // Handle local dev (Live Server)
+            console.log('Current Hostname:', window.location.hostname);
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                 console.log('Localhost detected: Using direct Worker URL');
+                 apiUrl = 'https://hm-youtube-api.ryan-scott.workers.dev/api/youtube/popular?limit=12'; 
+            } else {
+                 console.log('Production detected: Using relative API path');
+            }
+
+            let response;
+            
+            try {
+                response = await fetch(apiUrl);
+            } catch (e) {
+                console.warn('Relative path fetch failed, trying direct worker...');
+            }
+
+            // 2. Fallback: Direct Worker URL (If relative failed or returned 404)
+            if (!response || !response.ok) {
+                 // Use the direct worker URL you confirmed:
+                 apiUrl = 'https://hm-youtube-api.ryan-scott.workers.dev/api/youtube/popular?limit=12';
+                 response = await fetch(apiUrl);
+            }
+
+            if (!response.ok) throw new Error('Failed to load videos from both sources');
+            
+            const data = await response.json();
+            const videos = data.items || [];
+
+            if (videos.length === 0) {
+                console.warn('YouTube API returned 0 videos');
+                section.classList.add('hidden');
+                return;
+            }
+
+            // Clear Skeletons
+            container.innerHTML = '';
+            section.classList.remove('hidden');
+
+            // Render Cards
+            videos.forEach((video, index) => {
+                const card = document.createElement('div');
+                card.className = 'min-w-[280px] w-[280px] bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-colors cursor-pointer group snap-start';
+                card.onclick = () => loadVideo(video);
+
+                card.innerHTML = `
+                    <div class="relative aspect-video overflow-hidden">
+                        <img src="${video.thumbnailUrl}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
+                            ${video.duration || 'TOP'}
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                             <div class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center shadow-lg">
+                                <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <h4 class="text-sm font-semibold text-slate-100 line-clamp-2 leading-snug">${video.title}</h4>
+                        <div class="flex items-center justify-between text-[11px] text-slate-400">
+                            <span>${new Date(video.publishedAt).toLocaleDateString()}</span>
+                            <span>${formatViews(video.viewCount)} views</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Scroll Controls
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => {
+                    container.scrollBy({ left: -300, behavior: 'smooth' });
+                });
+                nextBtn.addEventListener('click', () => {
+                    container.scrollBy({ left: 300, behavior: 'smooth' });
+                });
+            }
+
+        } catch (err) {
+            console.error('YouTube API Error:', err);
+            // Hide section on error so broken UI doesn't show
+            section.classList.add('hidden');
+        }
+
+        function loadVideo(video) {
+            if (!playerContainer) return;
+            playerContainer.classList.remove('hidden');
+            
+            // Scroll to player if on mobile
+            if(window.innerWidth < 768) {
+                playerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            playerContainer.innerHTML = `
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/${video.videoId}?autoplay=1&rel=0" 
+                    title="${video.title}" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            `;
+        }
+
+        function formatViews(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toString();
+        }
+    }
 });

@@ -228,13 +228,33 @@ export default {
     try {
       const url = new URL(request.url);
 
+      // Common CORS headers
+      const corsHeaders = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "86400",
+      };
+
+      if (request.method === "OPTIONS") {
+        return new Response(null, { headers: corsHeaders });
+      }
+
+      // Root path health check
+      if (url.pathname === "/" || url.pathname === "") {
+        return new Response("Worker is running. Endpoint: /api/youtube/popular", { 
+            status: 200, 
+            headers: corsHeaders 
+        });
+      }
+
       // Only handle the API route you want
       if (url.pathname !== "/api/youtube/popular") {
-        return new Response("Not found", { status: 404 });
+        return new Response("Not found", { status: 404, headers: corsHeaders });
       }
 
       if (request.method !== "GET") {
-        return new Response("Method not allowed", { status: 405 });
+        return new Response("Method not allowed", { status: 405, headers: corsHeaders });
       }
 
       const apiKey = env.YOUTUBE_API_KEY;
@@ -259,8 +279,8 @@ export default {
       const payload = await buildPopularResponse(apiKey, limit);
 
       const res = jsonResponse(payload, 200, {
-        // If you ever serve from both www and apex, keep this strict or remove it.
-        // "Access-Control-Allow-Origin": "https://hughmassie.com",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
       });
 
       // Store in Cloudflare edge cache
