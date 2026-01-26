@@ -1,7 +1,0 @@
-name = "hughmassie"
-main = "src/index.js"
-compatibility_date = "2024-01-01"
-routes = ["hughmassie.com/api/*"]
-
-# [vars]
-# YOUTUBE_API_KEY = "..." # Set this via `wrangler secret put YOUTUBE_API_KEY`
