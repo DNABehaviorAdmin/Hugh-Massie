@@ -240,14 +240,6 @@ export default {
         return new Response(null, { headers: corsHeaders });
       }
 
-      // Root path health check
-      if (url.pathname === "/" || url.pathname === "") {
-        return new Response("Worker is running. Endpoint: /api/youtube/popular", { 
-            status: 200, 
-            headers: corsHeaders 
-        });
-      }
-
       // Only handle the API route you want
       if (url.pathname !== "/api/youtube/popular") {
         return new Response("Not found", { status: 404, headers: corsHeaders });
