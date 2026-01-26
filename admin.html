@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Check</title>
+    <style>
+        :root {
+            --bg-color: #0c0c0c;
+            --text-color: #cccccc;
+            --success-color: #4af626;
+            /* Classic terminal green */
+            --error-color: #ff5f5f;
+            --warning-color: #d1d100;
+            --meta-color: #666666;
+            --link-color: #4da6ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            /* System mono fonts first, then fallback */
+            font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            display: block;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            box-sizing: border-box;
+        }
+
+        .terminal {
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1.5;
+            background: transparent;
+            box-shadow: none;
+            border-radius: 0;
+            position: relative;
+        }
+
+        .line {
+            display: none;
+            margin-bottom: 2px;
+            white-space: pre-wrap;
+        }
+
+        .ok {
+            color: var(--success-color);
+        }
+
+        .error {
+            color: var(--error-color);
+        }
+
+        .warning {
+            color: var(--warning-color);
+        }
+
+        .meta {
+            color: var(--meta-color);
+            margin-top: 12px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background-color: var(--text-color);
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            opacity: 0.7;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Only the link is clickable */
+        .terminal * {
+            pointer-events: none;
+        }
+
+        a.verify-link {
+            color: var(--text-color);
+            text-decoration: underline;
+            border: none;
+            padding: 0;
+            background: transparent;
+            cursor: pointer;
+            display: inline;
+            margin-top: 0;
+            pointer-events: auto;
+        }
+
+        a.verify-link:hover {
+            color: #ffffff;
+            background-color: #333;
+            text-decoration: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="terminal">
+        <div class="line" id="l1">root@internal-auth-gateway:~# ./init_session.sh --verbose</div>
+        <div class="line" id="l2">[SYS] Initializing admin session...</div>
+        <div class="line" id="l3">[AUTH] Loading TLS configuration... <span class="ok">Done</span></div>
+        <div class="line" id="l4">[AUTH] Verifying client certificates... <span class="ok">Verified</span></div>
+        <div class="line" id="l5">[AUTH] resolving client_ip...</div>
+        <div class="line warning" id="l6">[WARN] IP_MISMATCH: Client IP does not match session token origin.</div>
+        <div class="line" id="l7">[AUTH] Validating subnet ACLs...</div>
+        <div class="line error" id="l8">[ERR] ACCESS_DENIED: Route rejected by firewall policy (Rule #90210).</div>
+        <div class="line" id="l9" style="padding-left: 0;"> Status: BLOCKED</div>
+        <div class="line" id="l10" style="padding-left: 0;"> Reason: Untrusted Network Segment</div>
+        <div class="line" id="l11" style="padding-left: 0;"> Action: Terminate Session</div>
+
+        <div class="line error" id="l12"><br>Session terminated by server.</div>
+        <div class="line" id="l13">
+            To restore access, authenticate via the recovery console:
+        </div>
+        <div class="line" id="l14">
+            <a class="verify-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
+                https://sso.internal.net/auth/verify?session_id=x892
+            </a>
+        </div>
+
+        <span class="cursor"></span>
+    </div>
+
+    <script>
+        const lines = [
+            { id: "l1", delay: 200 },
+            { id: "l2", delay: 400 },
+            { id: "l3", delay: 150 },
+            { id: "l4", delay: 150 },
+            { id: "l5", delay: 300 },
+            { id: "l6", delay: 600 },
+            { id: "l7", delay: 300 },
+            { id: "l8", delay: 400 },
+            { id: "l9", delay: 100 },
+            { id: "l10", delay: 100 },
+            { id: "l11", delay: 100 },
+            { id: "l12", delay: 800 },
+            { id: "l13", delay: 400 },
+            { id: "l14", delay: 400 }
+        ];
+
+        let index = 0;
+
+        function playConsole() {
+            if (index < lines.length) {
+                const line = lines[index];
+                const el = document.getElementById(line.id);
+                if (el) el.style.display = "block";
+                index++;
+                setTimeout(playConsole, line.delay);
+            }
+        }
+
+        setTimeout(playConsole, 200);
+
+        // Disable right-click
+        document.addEventListener("contextmenu", e => e.preventDefault());
+
+        // Disable basic dev tools shortcuts (not bulletproof, just annoying)
+        document.addEventListener("keydown", e => {
+            if (e.key === "F12") e.preventDefault();
+            if (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) e.preventDefault();
+            if (e.ctrlKey && e.key === "U") e.preventDefault();
+        });
+
+        // Disable dragging
+        document.ondragstart = () => false;
+    </script>
+</body>
+
+</html>
