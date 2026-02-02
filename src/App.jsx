@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
+
 import BackgroundEffects from './components/BackgroundEffects';
 import Toast from './components/Toast';
 import MagneticButton from './components/MagneticButton';
 import RevealSection from './components/RevealSection';
 import SpotlightCard from './components/SpotlightCard';
 import PodcastVideoGallery from './components/PodcastVideoGallery.jsx';
+import TestimonialsCarousel from './components/TestimonialsCarousel';
 
 function App() {
   const toastRef = useRef(null);
@@ -55,7 +56,7 @@ function App() {
       
       <BackgroundEffects />
       <Navbar />
-      <CustomCursor />
+
       <Toast ref={toastRef} />
 
       <main>
@@ -124,33 +125,39 @@ function App() {
                         <div className="flex flex-wrap gap-2 pt-2">
                             <span className="font-bold text-[10px] text-slate-200 uppercase tracking-[0.2em] bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-md shadow-sm">Titan 100 CEO</span>
                             <span className="font-bold text-[10px] text-slate-200 uppercase tracking-[0.2em] bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-md shadow-sm">Behavioral AI Architect</span>
-                            <span className="font-bold text-[10px] text-slate-200 uppercase tracking-[0.2em] bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-md shadow-sm">Money Energy Pioneer</span>
+                            <span className="font-bold text-[10px] text-slate-200 uppercase tracking-[0.2em] bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-md shadow-sm">Behavioral Economics Pioneer</span>
                         </div>
-                        <p>Hugh Massie is a global pioneer in the practical application of behavioral insights and the leader behind <strong>DNA Behavior International</strong>. A "reformed CPA" and serial entrepreneur, he has dedicated his career to solving money problems by addressing root people problems.</p>
-                        <p>He works with CEOs, boards, and leadership teams to align their "DNA"—their natural behaviors—with their business goals. His mission is to empower people globally with increased behavioral consciousness to reduce stress and promote sustainable success, performance, and long-term health.</p>
+                        <p>Hugh Massie is a global pioneer in the practical application of behavioral insights and the visionary behind <strong>DNA Behavior International</strong>, which serves individuals and organizations in over 125 countries.</p>
+                        <p>He has been on a transformational journey from being a "Boy Without a Father" to a "Reformed CPA" and now leads and guides organizations globally as a "Man of Influence".</p>
+                        <p>He works with CEOs, boards, and leadership teams to align their "DNA"—their natural behaviors—with their business goals. He solves every opportunity and challenge from the proven perspective that "behavior makes money".</p>
+                        <p>His purpose is to empower people globally to increase behavioral consciousness, reduce stress, and promote greater happiness, success, and health in a sustainable way.</p>
+                        <p>Hugh's moonshot goal is to commercialize DNA Behavior's AI-driven tech platform so that by 2030, it fully informs over 1 billion people annually on how to enhance their decision-making, performance and relationships.</p>
                         
                         <div className="pt-6 border-t border-white/5 space-y-4">
                             <h3 className="text-white font-bold text-lg">Impact & Connection</h3>
-                            <p>Beyond his corporate leadership, Hugh is the Co-Founder of <strong>Boys Without Fathers (BWF)</strong>, a non-profit dedicated to providing mentoring and coaching to help boys become men of influence. He is also a devoted dad and keen golfer.</p>
-                            <div className="flex flex-wrap gap-4 pt-2">
-                                <a href="https://www.linkedin.com/in/hughmassie/" target="_blank" className="p-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-accent transition-colors">
-                                    <span className="sr-only">LinkedIn</span>
-                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
-                                </a>
-                                <a href="https://www.hlpster.com/hlpers/clo7znc0z0001ban8mfu9i262" target="_blank" className="px-6 py-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-accent transition-colors text-sm font-semibold border border-white/5">
-                                    View Hlpster Profile
-                                </a>
-                                <a href="https://www.youtube.com/@behavioraleconomicstoday" target="_blank" className="p-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-accent transition-colors">
-                                    <span className="sr-only">YouTube</span>
-                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
-                                </a>
-                            </div>
+                            <p>Beyond his corporate leadership, Hugh is the Co-Founder of <strong>Boys Without Fathers (BWF)</strong>, a non-profit dedicated to providing mentoring and coaching to help boys become men of influence.</p>
+                            <p>He is also a devoted dad and keen golfer.</p>
+
                         </div>
 
                         <div className="pt-8 border-t border-white/5">
                             <h3 className="text-white font-bold text-lg mb-4">The Beginning</h3>
                             <p>It started with a realization. As a Chartered Accountant in Australia, Hugh saw a pattern: brilliant financial plans failing because of ignored human behavior. He realized that <em>"money problems are actually people problems."</em></p>
                             <p className="mt-4">Driven by this insight, he left traditional accounting to pioneer a new field. In 2001, he founded <strong>DNA Behavior</strong>, building the world's first system to scientifically measure and align human behavior with financial and business performance.</p>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-4 pt-6 mt-6 border-t border-white/5">
+                            <a href="https://www.linkedin.com/in/hughmassie/" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-accent transition-colors">
+                                <span className="sr-only">LinkedIn Profile</span>
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                            </a>
+                            <a href="https://www.hlpster.com/hlpers/clo7znc0z0001ban8mfu9i262" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-accent transition-colors text-sm font-semibold border border-white/5">
+                                View Hlpster Profile
+                            </a>
+                            <a href="https://www.youtube.com/@behavioraleconomicstoday" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-accent transition-colors">
+                                <span className="sr-only">YouTube Channel</span>
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
+                            </a>
                         </div>
                     </RevealSection>
                 </div>
@@ -188,7 +195,7 @@ function App() {
                     <p className="text-slate-400 font-light text-lg">Ventures & Impact</p>
                  </RevealSection>
 
-                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                      {/* Card 1 */}
                      <SpotlightCard as="a" href="https://dnabehavior.com" target="_blank" rel="noopener noreferrer" className="block rounded-2xl p-8 group hover:border-accent-blue/30 relative overflow-hidden delay-100">
                          <div className="absolute inset-0 bg-accent-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -222,6 +229,16 @@ function App() {
                          </div>
                          <h3 className="text-xl font-bold text-white mb-4 group-hover:text-accent-blue transition-colors flex items-center gap-2 relative z-10">Leadership DNA <span className="text-[10px] uppercase tracking-wide bg-white/10 text-slate-300 px-2 py-0.5 rounded-full border border-white/10">PDF</span></h3>
                          <p className="text-slate-400 text-sm leading-relaxed relative z-10">The definitive guide to unlocking human potential in business. Download Hugh's comprehensive book on behavioral leadership.</p>
+                     </SpotlightCard>
+
+                     {/* Card 4 - BWF */}
+                     <SpotlightCard as="a" href="https://www.boyswithoutfathers.org" target="_blank" rel="noopener noreferrer" className="block rounded-2xl p-8 group hover:border-accent-blue/30 relative overflow-hidden delay-400">
+                         <div className="absolute inset-0 bg-accent-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                         <div className="w-12 h-12 mb-8 rounded-xl bg-accent-blue/10 flex items-center justify-center text-accent-blue group-hover:scale-110 transition-transform duration-300 relative z-10">
+                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                         </div>
+                         <h3 className="text-xl font-bold text-white mb-4 group-hover:text-accent-blue transition-colors flex items-center gap-2 relative z-10">Boys Without Fathers <span className="text-[10px] uppercase tracking-wide bg-accent-blue/20 text-accent-blue px-2 py-0.5 rounded-full border border-accent-blue/20">Non-Profit</span></h3>
+                         <p className="text-slate-400 text-sm leading-relaxed relative z-10">Dedicated to mentoring and coaching boys to become men of influence. A charitable initiative co-founded by Hugh Massie.</p>
                      </SpotlightCard>
                  </div>
                  
@@ -280,16 +297,16 @@ function App() {
                                   </div>
                               </div>
                               <div className="flex flex-wrap gap-3 mt-4">
-                                  <MagneticButton as="a" title="Listen on Apple Podcasts" href="https://podcasts.apple.com/us/podcast/the-behavioral-economics-podcast/id1844700855" target="_blank" className="p-3 bg-white/5 border border-white/10 text-white rounded-full hover:bg-white hover:text-slate-900 transition-all">
+                                  <MagneticButton as="a" title="Listen on Apple Podcasts" aria-label="Listen on Apple Podcasts" href="https://podcasts.apple.com/us/podcast/the-behavioral-economics-podcast/id1844700855" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 border border-white/10 text-white rounded-full hover:bg-white hover:text-slate-900 transition-all">
                                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.7 19.5c-.75 1.1-1.5 2.2-2.7 2.2-1.1 0-1.45-.65-2.7-.65-1.3 0-1.65.65-2.7.65-1.1 0-1.9-1.1-2.7-2.2C6.75 17.7 5.25 14.5 5.25 11c0-3.3 2.1-5.7 6-5.7 1.15 0 2.1.8 2.7.8.55 0 1.5-.8 2.8-.8 1.1 0 2 .45 2.5 1.15-2.2 1.35-1.85 4.5 0 5.2-.4 1.2-1 2.3-1.8 3.5.05.15.15.2.25.35zM15 3.5c.65-1 1.15-2 1-3.15-1.05.05-2.3.7-3 1.55-.65.8-1.2 2-1 3.1.95.05 2.3-.65 3-1.5z"></path></svg>
                                   </MagneticButton>
-                                  <MagneticButton as="a" title="Listen on Spotify" href="https://open.spotify.com/show/4m023IsfGpY2ZnJSqEwOef?si=e6a1db18640e468e" target="_blank" className="p-3 bg-white/5 border border-white/10 text-white rounded-full hover:bg-[#1DB954] hover:text-black transition-all">
+                                  <MagneticButton as="a" title="Listen on Spotify" aria-label="Listen on Spotify" href="https://open.spotify.com/show/4m023IsfGpY2ZnJSqEwOef?si=e6a1db18640e468e" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 border border-white/10 text-white rounded-full hover:bg-[#1DB954] hover:text-black transition-all">
                                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141 4.32-1.32 9.779-.6 13.5 1.56.42.18.6.72.241 1.26zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.4-1.02 15.66 1.44.539.3.66 1.02.359 1.56-.24.48-1.02.6-1.56.36z"></path></svg>
                                   </MagneticButton>
-                                  <MagneticButton as="a" title="Watch on YouTube" href="https://youtube.com/@behavioraleconomicstoday?si=QMi0Z2LwYhet0eb6" target="_blank" className="p-3 bg-white/5 border border-white/10 text-white rounded-full hover:bg-[#FF0000] transition-all">
+                                  <MagneticButton as="a" title="Watch on YouTube" aria-label="Watch on YouTube" href="https://youtube.com/@behavioraleconomicstoday?si=QMi0Z2LwYhet0eb6" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 border border-white/10 text-white rounded-full hover:bg-[#FF0000] transition-all">
                                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
                                   </MagneticButton>
-                                  <MagneticButton as="a" href="https://dnabehavior.com/podcasts" target="_blank" className="px-6 py-3 ml-auto bg-transparent border border-white/10 text-white rounded-full font-bold hover:bg-white/5 transition-all text-xs tracking-wider uppercase">
+                                  <MagneticButton as="a" href="https://dnabehavior.com/podcasts" target="_blank" rel="noopener noreferrer" className="px-6 py-3 ml-auto bg-transparent border border-white/10 text-white rounded-full font-bold hover:bg-white/5 transition-all text-xs tracking-wider uppercase">
                                       Explore all Episodes
                                   </MagneticButton>
                               </div>
@@ -309,7 +326,7 @@ function App() {
                                   </div>
                               </div>
                               <div className="flex items-center mt-4">
-                                  <MagneticButton as="a" href="https://blog.dnabehavior.com/author/hugh-massie" target="_blank" className="w-full px-8 py-4 bg-accent text-slate-900 rounded-full font-bold transition-all hover:shadow-[0_0_20px_rgba(45,212,191,0.4)]">
+                                  <MagneticButton as="a" href="https://blog.dnabehavior.com/author/hugh-massie" target="_blank" rel="noopener noreferrer" className="w-full px-8 py-4 bg-accent text-slate-900 rounded-full font-bold transition-all hover:shadow-[0_0_20px_rgba(45,212,191,0.4)]">
                                       Visit Behavioral Blog
                                   </MagneticButton>
                               </div>
@@ -343,40 +360,90 @@ function App() {
                         What Others Say
                     </h2>
                 </div>
+            </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                     <RevealSection className="delay-100">
-                         <SpotlightCard as="article" className="p-10 rounded-3xl relative">
-                             <svg className="w-10 h-10 text-accent/50 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
-                             <blockquote className="text-2xl text-slate-200 font-light leading-relaxed mb-10">
-                                 "Hugh's insights completely changed how we approach hiring and team dynamics. The ROI on behavioral alignment is undeniable."
-                             </blockquote>
-                             <footer className="text-base flex items-center gap-4">
-                                 <div className="h-px bg-white/20 w-12"></div>
-                                 <div>
-                                     <strong className="text-white block font-semibold">Sarah Jenkins</strong>
-                                     <span className="text-slate-500">CEO of FinTech Solutions</span>
-                                 </div>
-                             </footer>
-                         </SpotlightCard>
-                     </RevealSection>
+            <div className="max-w-[2400px] mx-auto">
+                <TestimonialsCarousel>
+                     <div data-slide className="snap-start shrink-0 w-[360px] md:w-[440px] lg:w-[520px]">
+                        <RevealSection className="delay-100 h-full">
+                            <SpotlightCard as="article" className="p-10 rounded-3xl relative h-full min-h-[420px] flex flex-col justify-between">
+                                <div>
+                                    <svg className="w-10 h-10 text-accent/50 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
+                                    <blockquote className="text-xl md:text-2xl text-slate-200 font-light leading-relaxed mb-10 line-clamp-4">
+                                        "Hugh moves the needle on self-understanding and the practicality of managing team and client differences."
+                                    </blockquote>
+                                </div>
+                                <footer className="text-base flex items-center gap-4">
+                                    <div className="h-px bg-white/20 w-12"></div>
+                                    <div>
+                                        <strong className="text-white block font-semibold">Rick Kent</strong>
+                                        <span className="text-slate-500 text-sm">CEO of Merit Financial and Meet Fruition</span>
+                                    </div>
+                                </footer>
+                            </SpotlightCard>
+                        </RevealSection>
+                     </div>
 
-                     <RevealSection className="delay-200">
-                         <SpotlightCard as="article" className="p-10 rounded-3xl relative">
-                             <svg className="w-10 h-10 text-accent/50 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
-                             <blockquote className="text-2xl text-slate-200 font-light leading-relaxed mb-10">
-                                 "A visionary leader who understands that numbers tell a story, but people write it. Hugh bridges that gap perfectly."
-                             </blockquote>
-                             <footer className="text-base flex items-center gap-4">
-                                 <div className="h-px bg-white/20 w-12"></div>
-                                 <div>
-                                     <strong className="text-white block font-semibold">David Ross</strong>
-                                     <span className="text-slate-500">Managing Director</span>
-                                 </div>
-                             </footer>
-                         </SpotlightCard>
-                     </RevealSection>
-                </div>
+                     <div data-slide className="snap-start shrink-0 w-[360px] md:w-[440px] lg:w-[520px]">
+                        <RevealSection className="delay-200 h-full">
+                            <SpotlightCard as="article" className="p-10 rounded-3xl relative h-full min-h-[420px] flex flex-col justify-between">
+                                <div>
+                                    <svg className="w-10 h-10 text-accent/50 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
+                                    <blockquote className="text-xl md:text-2xl text-slate-200 font-light leading-relaxed mb-10 line-clamp-4">
+                                        "Hugh moves the needle in building dynamic organizational cultures by starting with the hidden competitive advantage of discovering natural hard-wired behavior."
+                                    </blockquote>
+                                </div>
+                                <footer className="text-base flex items-center gap-4">
+                                    <div className="h-px bg-white/20 w-12"></div>
+                                    <div>
+                                        <strong className="text-white block font-semibold">Warren Rustand</strong>
+                                        <span className="text-slate-500 text-sm">Dean of EO Leadership Academy and Former YPO Chair</span>
+                                    </div>
+                                </footer>
+                            </SpotlightCard>
+                        </RevealSection>
+                     </div>
+
+                     <div data-slide className="snap-start shrink-0 w-[360px] md:w-[440px] lg:w-[520px]">
+                        <RevealSection className="delay-300 h-full">
+                            <SpotlightCard as="article" className="p-10 rounded-3xl relative h-full min-h-[420px] flex flex-col justify-between">
+                                <div>
+                                    <svg className="w-10 h-10 text-accent/50 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
+                                    <blockquote className="text-xl md:text-2xl text-slate-200 font-light leading-relaxed mb-10 line-clamp-4">
+                                        "Hugh has played a leading role in unlocking new frontiers of thinking and practical application in the emerging field of behavioral economics."
+                                    </blockquote>
+                                </div>
+                                <footer className="text-base flex items-center gap-4">
+                                    <div className="h-px bg-white/20 w-12"></div>
+                                    <div>
+                                        <strong className="text-white block font-semibold">Professor Meir Statman</strong>
+                                        <span className="text-slate-500 text-sm">University of Santa Clara</span>
+                                    </div>
+                                </footer>
+                            </SpotlightCard>
+                        </RevealSection>
+                     </div>
+
+                     <div data-slide className="snap-start shrink-0 w-[360px] md:w-[440px] lg:w-[520px]">
+                        <RevealSection className="delay-400 h-full">
+                            <SpotlightCard as="article" className="p-10 rounded-3xl relative h-full min-h-[420px] flex flex-col justify-between">
+                                <div>
+                                    <svg className="w-10 h-10 text-accent/50 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
+                                    <blockquote className="text-xl md:text-2xl text-slate-200 font-light leading-relaxed mb-10 line-clamp-4">
+                                        "Hugh has figured out how to bring the invisible people issues in all areas of life and business to the surface through scientific measurement."
+                                    </blockquote>
+                                </div>
+                                <footer className="text-base flex items-center gap-4">
+                                    <div className="h-px bg-white/20 w-12"></div>
+                                    <div>
+                                        <strong className="text-white block font-semibold">Ami Lokta</strong>
+                                        <span className="text-slate-500 text-sm">Maximum Impact Partners</span>
+                                    </div>
+                                </footer>
+                            </SpotlightCard>
+                        </RevealSection>
+                     </div>
+                </TestimonialsCarousel>
             </div>
         </section>
       </main>
