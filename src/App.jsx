@@ -352,97 +352,93 @@ function App() {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="py-32 md:py-48 relative" data-section-theme="teal">
-            <div className="ambient-shadow"></div>
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="text-center mb-24">
-                    <h2 className="inline-block text-3xl md:text-5xl font-bold text-white tracking-tight bg-slate-900/40 backdrop-blur-xl px-10 py-4 rounded-3xl border border-white/10 shadow-2xl">
+        <section id="testimonials" className="pt-48 pb-32 md:pt-64 md:pb-48 relative overflow-hidden scroll-mt-32">
+            <div className="absolute inset-0 bg-slate-950/60 -z-10" />
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+                <div className="text-center mb-24 md:mb-32">
+                    <h2 className="inline-block text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight px-10 py-4">
                         What Others Say
                     </h2>
                 </div>
             </div>
 
-            <div className="max-w-[2400px] mx-auto">
+            <div className="max-w-[2400px] mx-auto relative z-10">
                 <TestimonialsCarousel>
-                     <div data-slide className="snap-start shrink-0 w-[360px] md:w-[440px] lg:w-[520px]">
-                        <RevealSection className="delay-100 h-full">
-                            <SpotlightCard as="article" className="p-10 rounded-3xl relative h-full min-h-[420px] flex flex-col justify-between">
+                    <RevealSection className="h-full">
+                        <SpotlightCard as="article" className="p-10 md:p-14 lg:p-16 rounded-[3rem] relative h-full min-h-[500px] flex flex-col justify-between bg-[#0a0f1e] border border-white/10 group overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-[3rem] pointer-events-none" />
+                            <div className="relative z-10">
+                                <svg className="w-12 h-12 text-accent mb-10 opacity-100" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
+                                <blockquote className="text-2xl md:text-3xl text-white font-medium leading-[1.6] mb-12 tracking-tight">
+                                    "Hugh moves the needle on self-understanding and the practicality of managing team and client differences."
+                                </blockquote>
+                            </div>
+                            <footer className="relative z-10 flex items-center gap-6">
+                                <div className="h-0.5 bg-accent/40 w-16"></div>
                                 <div>
-                                    <svg className="w-10 h-10 text-accent/50 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
-                                    <blockquote className="text-xl md:text-2xl text-slate-200 font-light leading-relaxed mb-10 line-clamp-4">
-                                        "Hugh moves the needle on self-understanding and the practicality of managing team and client differences."
-                                    </blockquote>
+                                    <strong className="text-white block text-lg font-bold tracking-wide">Rick Kent</strong>
+                                    <span className="text-slate-400 text-sm font-medium uppercase tracking-widest">CEO of Merit Financial and Meet Fruition</span>
                                 </div>
-                                <footer className="text-base flex items-center gap-4">
-                                    <div className="h-px bg-white/20 w-12"></div>
-                                    <div>
-                                        <strong className="text-white block font-semibold">Rick Kent</strong>
-                                        <span className="text-slate-500 text-sm">CEO of Merit Financial and Meet Fruition</span>
-                                    </div>
-                                </footer>
-                            </SpotlightCard>
-                        </RevealSection>
-                     </div>
+                            </footer>
+                        </SpotlightCard>
+                    </RevealSection>
 
-                     <div data-slide className="snap-start shrink-0 w-[360px] md:w-[440px] lg:w-[520px]">
-                        <RevealSection className="delay-200 h-full">
-                            <SpotlightCard as="article" className="p-10 rounded-3xl relative h-full min-h-[420px] flex flex-col justify-between">
+                    <RevealSection className="h-full delay-100">
+                        <SpotlightCard as="article" className="p-10 md:p-14 lg:p-16 rounded-[3rem] relative h-full min-h-[500px] flex flex-col justify-between bg-[#0a0f1e] border border-white/10 group overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-[3rem] pointer-events-none" />
+                            <div className="relative z-10">
+                                <svg className="w-14 h-14 text-accent mb-12 opacity-90" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
+                                <blockquote className="text-2xl md:text-3xl lg:text-4xl text-white font-semibold leading-[1.5] mb-12 tracking-tight line-clamp-6">
+                                    "Hugh moves the needle in building dynamic organizational cultures by starting with the hidden competitive advantage of discovering natural hard-wired behavior."
+                                </blockquote>
+                            </div>
+                            <footer className="relative z-10 flex items-center gap-6">
+                                <div className="h-0.5 bg-accent/40 w-16"></div>
                                 <div>
-                                    <svg className="w-10 h-10 text-accent/50 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
-                                    <blockquote className="text-xl md:text-2xl text-slate-200 font-light leading-relaxed mb-10 line-clamp-4">
-                                        "Hugh moves the needle in building dynamic organizational cultures by starting with the hidden competitive advantage of discovering natural hard-wired behavior."
-                                    </blockquote>
+                                    <strong className="text-white block text-lg font-bold tracking-wide">Warren Rustand</strong>
+                                    <span className="text-slate-400 text-sm font-medium uppercase tracking-widest">Dean of EO Leadership Academy and Former YPO Chair</span>
                                 </div>
-                                <footer className="text-base flex items-center gap-4">
-                                    <div className="h-px bg-white/20 w-12"></div>
-                                    <div>
-                                        <strong className="text-white block font-semibold">Warren Rustand</strong>
-                                        <span className="text-slate-500 text-sm">Dean of EO Leadership Academy and Former YPO Chair</span>
-                                    </div>
-                                </footer>
-                            </SpotlightCard>
-                        </RevealSection>
-                     </div>
+                            </footer>
+                        </SpotlightCard>
+                    </RevealSection>
 
-                     <div data-slide className="snap-start shrink-0 w-[360px] md:w-[440px] lg:w-[520px]">
-                        <RevealSection className="delay-300 h-full">
-                            <SpotlightCard as="article" className="p-10 rounded-3xl relative h-full min-h-[420px] flex flex-col justify-between">
+                    <RevealSection className="h-full delay-200">
+                        <SpotlightCard as="article" className="p-10 md:p-14 lg:p-16 rounded-[3rem] relative h-full min-h-[500px] flex flex-col justify-between bg-[#0a0f1e] border border-white/10 group overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-[3rem] pointer-events-none" />
+                            <div className="relative z-10">
+                                <svg className="w-14 h-14 text-accent mb-12 opacity-90" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
+                                <blockquote className="text-2xl md:text-3xl lg:text-4xl text-white font-semibold leading-[1.5] mb-12 tracking-tight line-clamp-6">
+                                    "Hugh has played a leading role in unlocking new frontiers of thinking and practical application in the emerging field of behavioral economics."
+                                </blockquote>
+                            </div>
+                            <footer className="relative z-10 flex items-center gap-6">
+                                <div className="h-0.5 bg-accent/40 w-16"></div>
                                 <div>
-                                    <svg className="w-10 h-10 text-accent/50 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
-                                    <blockquote className="text-xl md:text-2xl text-slate-200 font-light leading-relaxed mb-10 line-clamp-4">
-                                        "Hugh has played a leading role in unlocking new frontiers of thinking and practical application in the emerging field of behavioral economics."
-                                    </blockquote>
+                                    <strong className="text-white block text-lg font-bold tracking-wide">Professor Meir Statman</strong>
+                                    <span className="text-slate-400 text-sm font-medium uppercase tracking-widest">University of Santa Clara</span>
                                 </div>
-                                <footer className="text-base flex items-center gap-4">
-                                    <div className="h-px bg-white/20 w-12"></div>
-                                    <div>
-                                        <strong className="text-white block font-semibold">Professor Meir Statman</strong>
-                                        <span className="text-slate-500 text-sm">University of Santa Clara</span>
-                                    </div>
-                                </footer>
-                            </SpotlightCard>
-                        </RevealSection>
-                     </div>
+                            </footer>
+                        </SpotlightCard>
+                    </RevealSection>
 
-                     <div data-slide className="snap-start shrink-0 w-[360px] md:w-[440px] lg:w-[520px]">
-                        <RevealSection className="delay-400 h-full">
-                            <SpotlightCard as="article" className="p-10 rounded-3xl relative h-full min-h-[420px] flex flex-col justify-between">
+                    <RevealSection className="h-full delay-300">
+                        <SpotlightCard as="article" className="p-10 md:p-14 lg:p-16 rounded-[3rem] relative h-full min-h-[500px] flex flex-col justify-between bg-[#0a0f1e] border border-white/10 group overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-[3rem] pointer-events-none" />
+                            <div className="relative z-10">
+                                <svg className="w-14 h-14 text-accent mb-12 opacity-90" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
+                                <blockquote className="text-2xl md:text-3xl lg:text-4xl text-white font-semibold leading-[1.5] mb-12 tracking-tight line-clamp-6">
+                                    "Hugh has figured out how to bring the invisible people issues in all areas of life and business to the surface through scientific measurement."
+                                </blockquote>
+                            </div>
+                            <footer className="relative z-10 flex items-center gap-6">
+                                <div className="h-0.5 bg-accent/40 w-16"></div>
                                 <div>
-                                    <svg className="w-10 h-10 text-accent/50 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.11 16.03 14.296 15.402C14.482 14.774 14.764 14.263 15.142 13.869C15.52 13.475 16.036 13.131 16.69 12.837C17.344 12.543 18.162 12.396 19.146 12.396V6L19 6C17.656 6 16.516 6.306 15.58 6.918C14.644 7.53 13.924 8.358 13.42 9.402C12.916 10.446 12.664 11.694 12.664 13.146V21H14.017ZM8.05 21V18C8.05 16.896 8.143 16.03 8.329 15.402C8.515 14.774 8.797 14.263 9.175 13.869C9.553 13.475 10.069 13.131 10.723 12.837C11.377 12.543 12.195 12.396 13.179 12.396V6L13.033 6C11.689 6 10.549 6.306 9.613 6.918C8.677 7.53 7.957 8.358 7.453 9.402C6.949 10.446 6.697 11.694 6.697 13.146V21H8.05Z"></path></svg>
-                                    <blockquote className="text-xl md:text-2xl text-slate-200 font-light leading-relaxed mb-10 line-clamp-4">
-                                        "Hugh has figured out how to bring the invisible people issues in all areas of life and business to the surface through scientific measurement."
-                                    </blockquote>
+                                    <strong className="text-white block text-lg font-bold tracking-wide">Ami Lokta</strong>
+                                    <span className="text-slate-400 text-sm font-medium uppercase tracking-widest">Maximum Impact Partners</span>
                                 </div>
-                                <footer className="text-base flex items-center gap-4">
-                                    <div className="h-px bg-white/20 w-12"></div>
-                                    <div>
-                                        <strong className="text-white block font-semibold">Ami Lokta</strong>
-                                        <span className="text-slate-500 text-sm">Maximum Impact Partners</span>
-                                    </div>
-                                </footer>
-                            </SpotlightCard>
-                        </RevealSection>
-                     </div>
+                            </footer>
+                        </SpotlightCard>
+                    </RevealSection>
                 </TestimonialsCarousel>
             </div>
         </section>

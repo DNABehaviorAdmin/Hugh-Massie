@@ -141,13 +141,13 @@
   animation-delay: 3s;
 }
 
-/* 4. Spotlight Card */
+/* 4. Spotlight Card - Solid Glass Effect */
 .spotlight-card {
   position: relative;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.02);
-  /* Very subtle base */
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  /* Solid dark background - no transparency */
+  background: #0a0f1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .spotlight-card::before {
@@ -159,10 +159,10 @@
   bottom: 0;
   border-radius: inherit;
   padding: 1px;
-  /* Border width */
+  /* Spotlight border glow on hover */
   background: radial-gradient(
     800px circle at var(--mouse-x, 50% 50%) var(--mouse-y, 50% 50%),
-    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.12),
     transparent 40%
   );
   -webkit-mask:
@@ -177,7 +177,7 @@
   transition: opacity 0.5s;
 }
 
-/* Inner glow pool */
+/* Inner subtle highlight - no blur, solid */
 .spotlight-card::after {
   content: "";
   position: absolute;
@@ -185,9 +185,10 @@
   left: 0;
   right: 0;
   bottom: 0;
+  /* Very subtle gradient for depth, no blur */
   background: radial-gradient(
     600px circle at var(--mouse-x, 50% 50%) var(--mouse-y, 50% 50%),
-    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.03),
     transparent 40%
   );
   pointer-events: none;
